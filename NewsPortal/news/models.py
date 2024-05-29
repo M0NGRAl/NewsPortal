@@ -48,6 +48,10 @@ class Post(models.Model):
     def preview(self):
         return self.text[:124] + "..."
 
+    def __str__(self):
+        formatted_time = self.time_in.strftime('%d %B %Y')
+        return f'{self.heading}: {formatted_time}: {self.text}'
+
 
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
