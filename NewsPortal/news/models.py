@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 # Create your models here.
 class Author(models.Model):
      author = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -19,10 +20,18 @@ class Author(models.Model):
          self.rating = post_rating_total + author_comments_ratings + post_comments_ratings
          self.save()
 
+     def __str__(self):
+         return self.author.username  # Возвращаем имя пользователя
+
+
+
 
 
 class Category(models.Model):
     category = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.category
 
 
 class Post(models.Model):
@@ -51,6 +60,10 @@ class Post(models.Model):
     def __str__(self):
         formatted_time = self.time_in.strftime('%d %B %Y')
         return f'{self.heading}: {formatted_time}: {self.text}'
+
+    def get_absolute_url(self):
+        return reverse('posts_detail', args=[str(self.id)])
+
 
 
 class PostCategory(models.Model):
