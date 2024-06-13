@@ -6,7 +6,7 @@ Post
 {% endblock title %}
 
 {% block content %}
-   <h1>Все товары</h1>
+   <h1>Все новости</h1>
     <h3>{{ posts|length }}</h3>
 
 
@@ -17,6 +17,11 @@ Post
                <td>Заголовок</td>
                <td>Дата публикации</td>
                <td>Текст</td>
+
+               {# Условие получается составным. #}
+                {% if perms.news.change_post %}
+                <td>Действия</td>
+                {% endif %}
            </tr>
 
            {% for post in posts %}
@@ -24,6 +29,16 @@ Post
                <td>{{ post.heading|censor }}</td>
                <td>{{ time_now|date:'M d Y' }}</td>
                <td>{{ post.text|truncatewords:20|censor }}</td>
+
+
+               <td>
+                    {# А здесь доступ для каждой ссылки теперь будем проверять отдельно #}
+                    {% if perms.news.change_post %}
+                    <a href="{% url 'post_edit' post.id %}">Изменить</a>
+                    {% endif %}
+
+
+                </td>
            </tr>
            {% endfor %}
 
