@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
+    "django_apscheduler",
 ]
 
 SITE_ID = 1
@@ -131,7 +132,17 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "wr9va"
+EMAIL_HOST_PASSWORD = "dzcxsyfzfunoktts"
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = "wr9va@yandex.ru"
 
 
 # Static files (CSS, JavaScript, Images)
@@ -153,4 +164,5 @@ LOGIN_REDIRECT_URL = '/posts/'
 
 LOGIN_REDIRECT_URL = '/posts/'
 
+ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
 
