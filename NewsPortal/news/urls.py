@@ -19,5 +19,6 @@ urlpatterns = [
    path('news/<int:pk>/delete/', NewsDelete.as_view()),
    path('articles/<int:pk>/delete/', ArticleDelete.as_view()),
    path('subscriptions/', subscriptions, name='subscriptions'),
+   path('', IndexView.as_view()),
 
 ]
