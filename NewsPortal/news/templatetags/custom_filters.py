@@ -7,7 +7,6 @@ CENSOR_WORDS = {
     'title2': 't*****',
 }
 
-
 @register.filter(name='censor')
 def censor(value):
     if not isinstance(value, str):

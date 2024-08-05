@@ -8,7 +8,6 @@ class NewsForm(forms.ModelForm):
             'position',
             'author',
             'category',
-            'category',
             'heading',
             'text',
         ]
