@@ -12,6 +12,8 @@ from django.db.models import Exists, OuterRef
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 from .models import Subscription, Category
+from django.utils.translation import gettext as _
+from django.http import HttpResponse
 
 
 
@@ -156,6 +158,12 @@ def subscriptions(request):
         'subscriptions.html',
         {'categories': categories_with_subscriptions},
     )
+
+class Index(NewsEdit):
+    def get(self, request):
+        string = _('Hello world')
+
+        return HttpResponse(string)
 
 
 

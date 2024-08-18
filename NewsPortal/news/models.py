@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils.translation import pgettext_lazy  # импортируем «ленивый» геттекст с подсказкой
+
+
+
 # Create your models here.
 class Author(models.Model):
      author = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -28,7 +32,8 @@ class Author(models.Model):
 
 
 class Category(models.Model):
-    category = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=100,
+                            help_text=_('category name'))  # добавим переводящийся текст подсказку к полю
 
     def __str__(self):
         return self.category
@@ -93,3 +98,11 @@ class Subscription(models.Model):
     category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='subscriptions')
 
 
+class MyModel(models.Model):
+    name = models.CharField(max_length=100)
+    kind = models.ForeignKey(
+        Category,
+        on_delete=models.CASCADE,
+        related_name='kinds',
+        verbose_name=pgettext_lazy('help text for MyModel model', 'This is the help text'),
+    )

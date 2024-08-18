@@ -54,6 +54,7 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -123,6 +124,10 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale')
+]
+
 USE_I18N = True
 
 USE_TZ = True
@@ -182,7 +187,7 @@ ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'style' : '{',
+    'style': '{',
     'formatters': {
         'simple': {
             'format': '%(levelname)s %(asctime)s %(message)s'
@@ -194,13 +199,15 @@ LOGGING = {
             'format': '%(levelname)s %(asctime)s %(message)s %(pathname)s %(exc_info)s'
         },
         'detailed': {
-            'format': '%(levelname)s %(asctime)s  %(module)s %(message)s'
+            'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
         },
     },
-
     'filters': {
         'require_debug_true': {
             '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
         },
     },
     'handlers': {
@@ -208,46 +215,46 @@ LOGGING = {
             'level': 'DEBUG',
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
-            'formatter': 'simple'
+            'formatter': 'simple',
         },
         'console_warning': {
-            'level': 'WARNING ',
+            'level': 'WARNING',
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
+            'formatter': 'verbose',
         },
         'console_error': {
-            'level': 'ERROR ',
+            'level': 'ERROR',
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
-            'formatter': 'spesial'
+            'formatter': 'spesial',
         },
         'file_info': {
-            'level': 'INFO ',
+            'level': 'INFO',
             'filters': ['require_debug_false'],
-            'class': 'logging.StreamHandler',
+            'class': 'logging.FileHandler',
             'filename': 'general.log',
-            'formatter': 'detailed'
+            'formatter': 'detailed',
         },
         'file_error': {
-            'level': 'ERROR ',
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'logging.FileHandler',
             'filename': 'errors.log',
-            'formatter': 'spesial'
+            'formatter': 'spesial',
         },
         'file_security': {
-            'level': 'DEBUG ',
+            'level': 'DEBUG',
             'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
+            'class': 'logging.FileHandler',
             'filename': 'security.log',
-            'formatter': 'detailed'
+            'formatter': 'detailed',
         },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler',
-            'formatter': 'verbose'
+            'formatter': 'verbose',
         },
     },
     'loggers': {
@@ -279,7 +286,9 @@ LOGGING = {
             'handlers': ['file_security'],
             'level': 'DEBUG',
             'propagate': False,
-        }
+        },
     }
 }
+
+LANGUAGE_CODE = 'ru'
 
